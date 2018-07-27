@@ -1,31 +1,35 @@
 const personality = {
-    general: [{
-        type: "personality type-Advocate INFJ"
-    },
+    general: {
+       personalityType: [
+            "personality type-INFJ",
+            "This personality type is the Advocate"
+    ],
 
-    agree = {
-        yesagree: "Advocates are creative, Insightful, Private",
-        reason: "Those are all things I know about myself."
-    },
-    disagree = {
-        notagree: "Advocates are decisive and altruistic. They always need a cause. ",
-        reason2: " I take a long time to make decisions. I very rarely take up causes.",
+    agree: [
+         "Advocates are creative, insightful, yet private people.",
+         "I agree with this evaluation"
+        
+    ],
+    disagree: [
+         "Advocates are decisive and altruistic. They always need a cause. ",
+         " I take a long time to make decisions. I very rarely take up causes."
 
-    },
+    ],
 
-    people = {
-        same: ""
+    people: [
+         "Nelson Mandela, Alanis Morrisett"
 
-    },
+    ],
 
-    communication = {
+    communication: [
 
-        withsib: "When communicating with my sib I would let them know the lines of communication are open and periodically check in.",
-        withinstructors: "When communicating with instructors I like using slack and having them available in class to help",
-        withTeam: "In tema projects we have used slack and open discussion to communicate. That has been very effective"
-    },
-    ]
+         "When communicating with my sib I would let them know the lines of communication are open and periodically check in.",
+         "When communicating with instructors I like using slack and having them available in class to help",
+         "In team projects we have used slack and open discussion to communicate. That has been very effective"
+    ],
 }
+};
+
 
 
 //creating function "name" is the name of the function-parameters=what I'm passing the personality object through 
@@ -34,7 +38,7 @@ const personality = {
 
 
 const profile = function (databaseObject, keyName) {
-    const personalityString = JSON.stringify(personality);
+    const personalityString = JSON.stringify(databaseObject);
     localStorage.setItem(keyName, personalityString);
 }
 
@@ -43,39 +47,58 @@ const profile = function (databaseObject, keyName) {
 
 profile(personality, "personalityKey");
 
- const personalitySection = localStorage.getItem("personalityKey");
- let data = JSON.parse(personalitySection);
+
+
+const personalitySection = localStorage.getItem("personalityKey");
+const data = JSON.parse(personalitySection);
+console.log(data);
+
+
+let newCards = document.querySelector(".card-group")
+    for (let personalityList in data) {
+      console.log(personalityList) ;
+       newCards.innerHTML += `
+       <div class="card">
+                  <img class="card-img-top" src="" alt="Card image cap">
+                  <div class="card-body" id ="card1">
+                    <h5 class="card-title">${personalityList}</h5>
+                    <p class="card-text" id=${personalityList}></p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  </div>
+                </div>`
+        let cardText = document.getElementById(`${personalityList}`)
+        for (let i = 0; i < data[personalityList].length; i++) {
+            const currentObject = data[personalityList][i];
+            console.log(currentObject);
 
 
 
-for (let personalityList in data) {
-    for (let i = 0; i < data[personalityList].length; i++) {
-        const currentObject = data[personalityList][i];
-        console.log(currentObject);
-        // tagging the list and the elements that go inside are list items
-                const ultag = document.createElement("li")
-        //get the element-create an id in the ul tag the child is the li 
-        //named ultag then go into the HTML (innerHTML) then the new constant called currentObject
-        document.getElementById("personalityList").appendChild(ultag).innerHTML =
-            `${currentObject.type}, ${currentObject.yesAgree}, ${currentObject.reason},
-             ${currentObject.notagree}, ${currentObject.reason2}, ${currentObject.same},
-             ${currentObject.withsib}, ${currentObject.withinstructors},${currentObject.withTeam}`;
+            // tagging the list and the elements that go inside are list items
+            const fragment = document.createDocumentFragment("div");
+            //get the element-create an id in the ul tag the child is the li 
+            //named ultag then go into the HTML (innerHTML) then the new constant called currentObject
+           const list = document.createElement("ul");
+            const listItem = document.createElement("li")
 
-    };
-}
+            listItem.textContent = `${currentObject.personalityType}`;
+            // `${currentObject.personalityType},${currentObject.yesAgree},${currentObject.reason},
+            // ${currentObject.notAgree},${currentObject.disagreeReason}`;
+            list.appendChild(listItem)
+            fragment.appendChild(list)
 
+            document.getElementById("card1").appendChild(fragment)
+            //const cardtwo = document.createElement("p")
+            //get the element-create an id in the ul tag the child is the li 
+            //named ultag then go into the HTML (innerHTML) then the new constant called currentObject
+            // document.getElementById("card2").appendChild(cardtwo).innerHTML =
+            //  `${currentObject.same}`;
 
+            //  const cardthree = document.createElement("p")
+            //  document.getElementById("card3").appendChild(cardthree).innerHTML =
+            //  ` ${currentObject.withsib}, ${currentObject.withinstructors},${currentObject.withTeam}`;
 
-
-
-
-
-
-
-
-
-
-
+        };
+    }
 
 
 
@@ -88,4 +111,8 @@ for (let personalityList in data) {
 
 
 
-    
+
+
+
+
+
