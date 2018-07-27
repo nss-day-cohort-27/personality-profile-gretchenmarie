@@ -1,3 +1,9 @@
+Header{
+    text-align: center;
+    font-size: 2em;
+    font-style: italic;
+}
+
 .container {
     margin: 2em;
     
@@ -18,3 +24,7 @@ background-color: rgb(60, 128, 131);
 {
     background-color: rgb(85, 130, 189);
 }
+.card-img-top{
+    border-radius: 10%;
+}
+
